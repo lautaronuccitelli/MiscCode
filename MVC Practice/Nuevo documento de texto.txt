@@ -1,0 +1,27 @@
+
+public static Client updateClient(Client client)
+{
+    Console.WriteLine("Enter new values (press Enter to keep current value):");
+    
+    Console.Write($"ID ({client.Id}): ");
+    string idInput = Console.ReadLine();
+    int newId = string.IsNullOrEmpty(idInput) ? client.Id : int.Parse(idInput);
+
+    Console.Write($"Name ({client.Name}): ");
+    string nameInput = Console.ReadLine();
+    string newName = string.IsNullOrEmpty(nameInput) ? client.Name : nameInput;
+
+    Console.Write($"Email ({client.Email}): ");
+    string emailInput = Console.ReadLine();
+    string newEmail = string.IsNullOrEmpty(emailInput) ? client.Email : emailInput;
+
+    Console.Write($"Phone ({client.Phone}): ");
+    string phoneInput = Console.ReadLine();
+    string newPhone = string.IsNullOrEmpty(phoneInput) ? client.Phone : phoneInput;
+
+    Console.Write($"Address ({client.Address}): ");
+    string addressInput = Console.ReadLine();
+    string newAddress = string.IsNullOrEmpty(addressInput) ? client.Address : addressInput;
+
+    return new Client(newId, newName, newEmail, newPhone, newAddress);
+}
