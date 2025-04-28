@@ -1,10 +1,16 @@
-class Car {
+package lugar.de.estacionamiento;
+
+
+public class Car {
+    private String carModel;
     private String carPlate;
     private String phone;
 
-    public Car (String carPlate, String phone){
+    
+    public Car (String carPlate, String phone, String carModel){
         this.carPlate = carPlate;
         this.phone = phone;
+        this.carModel=carModel;
     }
 
     public String getCarPlate(){
@@ -13,13 +19,19 @@ class Car {
     public String getPhone(){
         return phone;
     }
+    public String getCarModel(){
+    return carModel;
+    }
 
     public String toString(){
-        return "Car: Plate = " + carPlate + ", Phone = " + phone + ".";
+        return  carModel +  ", Plate = " + carPlate + ", Phone = " + phone + ". ";
     }
 }
 
-class Place {
+package lugar.de.estacionamiento;
+
+
+public class Place {
     private String name;
 
     public Place(String name){
@@ -31,11 +43,14 @@ class Place {
     }
 
     public String toString(){
-        return "Place: Name = " + name + ".";
+        return "Name = " + name + ". ";
     }
 }
 
-class Garage {
+package lugar.de.estacionamiento;
+
+
+public class Garage {
     private Car car;
     private Place place;
     private String enter;
@@ -45,28 +60,35 @@ class Garage {
         this.car = car;
         this.place = place;
         this.enter = enter;
-        this.exit = exit;
+        
     }
 
     public void getExit(String exit){
-
+          this.exit = exit;
     }
 
     public String toString(){
-        return "Garage: Car = " + car + "Place = " + place + "Enter = " + enter + "Exit = " + exit + ".";
+        return "Garage: Car = " + car + "Place: " + place + "Enter = " + enter + ", Exit = " + exit + ".";
 
     }
-} 
+}
 
-public class GarageCar{
-    public static void main (String[] args){
-        Car car1 = new Car("ABC 123", "22233344455");
+package lugar.de.estacionamiento;
+
+
+public class LugarDeEstacionamiento {
+
+   
+    public static void main(String[] args) {
+        Car car1 = new Car("ABC 123","223412413411234", "Honda");
         Place Place1 = new Place("A1");
 
         Garage garage = new Garage(car1, Place1, "08:00");
-        System.out.println("Registered entry: " + garage);
+        
 
         garage.getExit("17:00");
-        System.out.println("Registered entry: " + garage);
+        System.out.println("Car Registered: " + garage);
+
     }
+    
 }
