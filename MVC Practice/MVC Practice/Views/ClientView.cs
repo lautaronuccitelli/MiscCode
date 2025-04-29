@@ -11,11 +11,11 @@ namespace Views
     {
         public static void showClient(Client client)
         {
-            Console.WriteLine($"ID: {client.Id}");
-            Console.WriteLine($"Name: {client.Name}");
-            Console.WriteLine($"Email: {client.Email}");
-            Console.WriteLine($"Phone: {client.Phone}");
-            Console.WriteLine($"Adress: {client.Address}");
+            Console.Write($"|ID: {client.Id}|");
+            Console.Write($" |Name: {client.Name}|");
+            Console.Write($" |Email: {client.Email}|");
+            Console.Write($" |Phone: {client.Phone}|");
+            Console.Write($" |Adress: {client.Address}|");
         }
         public static Client LoadClient()
         {

@@ -19,10 +19,10 @@ namespace Views
         public static void ShowProduct(Product product)
         {
             Console.WriteLine("-----------------------");
-            Console.WriteLine($"Name: {product.Name}");
-            Console.WriteLine($"Price: {product.Price}");
-            Console.WriteLine($"Final price: {product.FinalPrice()}");
-            Console.WriteLine($"Info: {product.Description}");
+            Console.Write($"Name: {product.Name}");
+            Console.Write($"Price: {product.Price}");
+            Console.Write($"Final price: {product.FinalPrice()}");
+            Console.Write($"Info: {product.Description}");
             Console.WriteLine("-----------------------");
         }
 

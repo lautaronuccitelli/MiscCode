@@ -24,7 +24,8 @@ namespace MVC_Practice
                 Console.WriteLine("2. Show Orders.");
                 Console.WriteLine("3. Update Order.");
                 Console.WriteLine("4. Delete Order.");
-                Console.Write("Select an option (1-4)");
+                Console.WriteLine("5. Exit.");
+                Console.Write("Select an option (1-5): ");
                 option = int.Parse(Console.ReadLine());
                 switch (option)
                 {
@@ -35,7 +36,13 @@ namespace MVC_Practice
                         oController.ShowOrder();
                         break;
                     case 3:
-
+                        oController.UpdateOrder();
+                        break;
+                    case 4:
+                        oController.DeleteOrder();
+                        break;
+                    default:
+                        Console.WriteLine("Invalid option. Select 1-5.");
                         break;
                 }
             }

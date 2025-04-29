@@ -10,3 +10,9 @@ C:\Users\idra14\Desktop\MVC Practice\MVC Practice\obj\Debug\MVC Practice.exe
 C:\Users\idra14\Desktop\MVC Practice\MVC Practice\obj\Debug\MVC Practice.pdb
 C:\Users\idra14\Desktop\MVC Practice\MVC Practice\bin\Debug\MVC Practice.exe
 C:\Users\idra14\Desktop\MVC Practice\MVC Practice\bin\Debug\MVC Practice.pdb
+C:\Users\nucci\Desktop\MVC Practice\MVC Practice\obj\Debug\MVC Practice.csproj.AssemblyReference.cache
+C:\Users\nucci\Desktop\MVC Practice\MVC Practice\obj\Debug\MVC Practice.csproj.CoreCompileInputs.cache
+C:\Users\nucci\Desktop\MVC Practice\MVC Practice\obj\Debug\MVC Practice.exe
+C:\Users\nucci\Desktop\MVC Practice\MVC Practice\obj\Debug\MVC Practice.pdb
+C:\Users\nucci\Desktop\MVC Practice\MVC Practice\bin\Debug\MVC Practice.exe
+C:\Users\nucci\Desktop\MVC Practice\MVC Practice\bin\Debug\MVC Practice.pdb
