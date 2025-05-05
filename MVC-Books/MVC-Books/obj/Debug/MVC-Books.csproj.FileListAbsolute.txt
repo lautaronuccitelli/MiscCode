@@ -1,0 +1,7 @@
+D:\proyects\MVC-Books\MVC-Books\bin\Debug\MVC-Books.exe.config
+D:\proyects\MVC-Books\MVC-Books\bin\Debug\MVC-Books.exe
+D:\proyects\MVC-Books\MVC-Books\bin\Debug\MVC-Books.pdb
+D:\proyects\MVC-Books\MVC-Books\obj\Debug\MVC-Books.csproj.AssemblyReference.cache
+D:\proyects\MVC-Books\MVC-Books\obj\Debug\MVC-Books.csproj.CoreCompileInputs.cache
+D:\proyects\MVC-Books\MVC-Books\obj\Debug\MVC-Books.exe
+D:\proyects\MVC-Books\MVC-Books\obj\Debug\MVC-Books.pdb

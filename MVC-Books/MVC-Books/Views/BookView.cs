@@ -11,8 +11,8 @@ namespace Views
     {
         public static void ShowBookList(List<Book> bookList)
         {
-            Console.WriteLine("List of Books: ");
             Console.WriteLine();
+            Console.WriteLine("List of Books: ");
             foreach (Book book in bookList)
             {
                 Console.WriteLine($"Title: {book.Title} Author: {book.Author} Price: {book.Price}.");
@@ -35,6 +35,19 @@ namespace Views
             temp.Author = Console.ReadLine();
             Console.Write("Book's price?: ");
             temp.Price = double.Parse(Console.ReadLine());
+
+            return temp;
+        }
+        public static List<Book> LoadBookList()
+        {
+            string resp = "n";
+            List<Book> temp = new List<Book>();
+            do
+            {
+                temp.Add(BookView.LoadBook());
+                Console.WriteLine("Add another book? Y/N");
+                resp = Console.ReadLine();
+            } while (resp.ToLower() != "n");
 
             return temp;
         }
