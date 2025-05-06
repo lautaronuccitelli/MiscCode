@@ -1,0 +1,6 @@
+HERENCIA-AGREGAR SUBCLASE CAMIONETA= saber si tiene cupula o no la camioneta.
+Agregar 2 subcalses mas de vehiculos y que sea funcional con menu.
+Lugar de estacionamiento suclase.
+-
+lista de lugares libres.
+cargar si vehiculo entra o sale.
