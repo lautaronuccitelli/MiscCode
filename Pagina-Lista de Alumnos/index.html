@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Alumnos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main-container">
+        <div class="lista-container">
+            <h1>Lista de Alumnos</h1>
+            <ul id="listaAlumnos"></ul>
+        </div>
+        <div class="form-container">
+            <h2>Agregar Alumno</h2>
+            <input type="text" id="nombreNuevo" placeholder="Nombre"><br>
+            <input type="text" id="apellidoNuevo" placeholder="Apellido"><br>
+            <input type="text" id="cursoNuevo" placeholder="Curso"><br>
+            <button onclick="addAlumno()">Agregar Alumno</button>
+
+            <h2>Modificar Alumno</h2>
+            <input type="text" id="updateId" placeholder="ID del alumno"><br>
+            <input type="text" id="nombreMod" placeholder="Nuevo nombre"><br>
+            <input type="text" id="apellidoMod" placeholder="Nuevo apellido"><br>
+            <input type="text" id="cursoMod" placeholder="Nuevo curso"><br>
+            <button onclick="updateAlumno()">Modificar</button>
+
+            <h2>Eliminar Alumno</h2>
+            <input type="text" id="deleteId" placeholder="ID del alumno">
+            <button onclick="deleteAlumno()">Eliminar</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
