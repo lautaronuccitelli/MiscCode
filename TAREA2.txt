@@ -1,0 +1,302 @@
+package lugar.de.estacionamiento;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+// Abstract Vehicle class for inheritance
+abstract class Vehicle {
+    private String plate;
+    private String phone;
+    private String model;
+
+    public Vehicle(String plate, String phone, String model) {
+        this.plate = plate;
+        this.phone = phone;
+        this.model = model;
+    }
+
+    public String getPlate() {
+        return plate;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    @Override
+    public String toString() {
+        return model + ", Plate = " + plate + ", Phone = " + phone;
+    }
+}
+
+// Car subclass
+class Car extends Vehicle {
+    public Car(String plate, String phone, String model) {
+        super(plate, phone, model);
+    }
+}
+
+// Pickup subclass with canopy attribute
+class Pickup extends Vehicle {
+    private boolean hasCanopy;
+
+    public Pickup(String plate, String phone, String model, boolean hasCanopy) {
+        super(plate, phone, model);
+        this.hasCanopy = hasCanopy;
+    }
+
+    public boolean hasCanopy() {
+        return hasCanopy;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", Canopy = " + (hasCanopy ? "Yes" : "No");
+    }
+}
+
+// Motorcycle subclass
+class Motorcycle extends Vehicle {
+    private boolean hasSidecar;
+
+    public Motorcycle(String plate, String phone, String model, boolean hasSidecar) {
+        super(plate, phone, model);
+        this.hasSidecar = hasSidecar;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", Sidecar = " + (hasSidecar ? "Yes" : "No");
+    }
+}
+
+// Van subclass
+class Van extends Vehicle {
+    private int cargoCapacity;
+
+    public Van(String plate, String phone, String model, int cargoCapacity) {
+        super(plate, phone, model);
+        this.cargoCapacity = cargoCapacity;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", Cargo Capacity = " + cargoCapacity + "kg";
+    }
+}
+
+// Place class (unchanged)
+class Place {
+    private String name;
+
+    public Place(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return "Name = " + name;
+    }
+}
+
+// Garage class modified to use Vehicle
+class Garage {
+    private Vehicle vehicle;
+    private Place place;
+    private String enter;
+    private String exit;
+
+    public Garage(Vehicle vehicle, Place place, String enter) {
+        this.vehicle = vehicle;
+        this.place = place;
+        this.enter = enter;
+    }
+
+    public void setExit(String exit) {
+        this.exit = exit;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public Place getPlace() {
+        return place;
+    }
+
+    @Override
+    public String toString() {
+        return "Garage: Vehicle = " + vehicle + ", Place: " + place + ", Enter = " + enter + ", Exit = " + (exit != null ? exit : "Not exited") + ".";
+    }
+}
+
+// ParkingLot subclass for managing parking
+class ParkingLot {
+    private List<Place> places;
+    private List<Garage> occupiedPlaces;
+
+    public ParkingLot(int numPlaces) {
+        places = new ArrayList<>();
+        occupiedPlaces = new ArrayList<>();
+        // Initialize places (e.g., A1, A2, ..., B1, B2, ...)
+        for (int i = 1; i <= numPlaces; i++) {
+            places.add(new Place("A" + i));
+        }
+    }
+
+    public List<Place> getFreePlaces() {
+        List<Place> freePlaces = new ArrayList<>(places);
+        for (Garage g : occupiedPlaces) {
+            freePlaces.remove(g.getPlace());
+        }
+        return freePlaces;
+    }
+
+    public boolean parkVehicle(Vehicle vehicle, String placeName, String enterTime) {
+        Place place = places.stream()
+                .filter(p -> p.getName().equals(placeName))
+                .findFirst()
+                .orElse(null);
+        if (place == null || getFreePlaces().stream().noneMatch(p -> p.getName().equals(placeName))) {
+            return false;
+        }
+        occupiedPlaces.add(new Garage(vehicle, place, enterTime));
+        return true;
+    }
+
+    public boolean exitVehicle(String plate, String exitTime) {
+        Garage garage = occupiedPlaces.stream()
+                .filter(g -> g.getVehicle().getPlate().equals(plate))
+                .findFirst()
+                .orElse(null);
+        if (garage == null) {
+            return false;
+        }
+        garage.setExit(exitTime);
+        occupiedPlaces.remove(garage);
+        return true;
+    }
+
+    public List<Garage> getOccupiedPlaces() {
+        return new ArrayList<>(occupiedPlaces);
+    }
+}
+
+// Main class with menu
+public class LugarDeEstacionamiento {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ParkingLot parkingLot = new ParkingLot(5); // 5 parking places
+
+        while (true) {
+            System.out.println("\n=== Parking Management System ===");
+            System.out.println("1. Park Vehicle");
+            System.out.println("2. Exit Vehicle");
+            System.out.println("3. Show Free Places");
+            System.out.println("4. Show Occupied Places");
+            System.out.println("5. Exit");
+            System.out.print("Choose an option: ");
+            int option = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            if (option == 5) {
+                System.out.println("Exiting...");
+                break;
+            }
+
+            switch (option) {
+                case 1: // Park Vehicle
+                    System.out.println("Vehicle Type: 1. Car 2. Pickup 3. Motorcycle 4. Van");
+                    int vehicleType = scanner.nextInt();
+                    scanner.nextLine();
+
+                    System.out.print("Plate: ");
+                    String plate = scanner.nextLine();
+                    System.out.print("Phone: ");
+                    String phone = scanner.nextLine();
+                    System.out.print("Model: ");
+                    String model = scanner.nextLine();
+
+                    Vehicle vehicle;
+                    switch (vehicleType) {
+                        case 1:
+                            vehicle = new Car(plate, phone, model);
+                            break;
+                        case 2:
+                            System.out.print("Has canopy? (y/n): ");
+                            boolean hasCanopy = scanner.nextLine().toLowerCase().startsWith("y");
+                            vehicle = new Pickup(plate, phone, model, hasCanopy);
+                            break;
+                        case 3:
+                            System.out.print("Has sidecar? (y/n): ");
+                            boolean hasSidecar = scanner.nextLine().toLowerCase().startsWith("y");
+                            vehicle = new Motorcycle(plate, phone, model, hasSidecar);
+                            break;
+                        case 4:
+                            System.out.print("Cargo capacity (kg): ");
+                            int capacity = scanner.nextInt();
+                            scanner.nextLine();
+                            vehicle = new Van(plate, phone, model, capacity);
+                            break;
+                        default:
+                            System.out.println("Invalid vehicle type.");
+                            continue;
+                    }
+
+                    System.out.print("Place (e.g., A1): ");
+                    String placeName = scanner.nextLine();
+                    System.out.print("Enter time (e.g., 08:00): ");
+                    String enterTime = scanner.nextLine();
+
+                    if (parkingLot.parkVehicle(vehicle, placeName, enterTime)) {
+                        System.out.println("Vehicle parked successfully.");
+                    } else {
+                        System.out.println("Failed to park vehicle. Place may be occupied or invalid.");
+                    }
+                    break;
+
+                case 2: // Exit Vehicle
+                    System.out.print("Plate: ");
+                    String exitPlate = scanner.nextLine();
+                    System.out.print("Exit time (e.g., 17:00): ");
+                    String exitTime = scanner.nextLine();
+
+                    if (parkingLot.exitVehicle(exitPlate, exitTime)) {
+                        System.out.println("Vehicle exited successfully.");
+                    } else {
+                        System.out.println("Vehicle not found.");
+                    }
+                    break;
+
+                case 3: // Show Free Places
+                    List<Place> freePlaces = parkingLot.getFreePlaces();
+                    System.out.println("Free Places: " + (freePlaces.isEmpty() ? "None" : ""));
+                    for (Place p : freePlaces) {
+                        System.out.println(p);
+                    }
+                    break;
+
+                case 4: // Show Occupied Places
+                    List<Garage> occupied = parkingLot.getOccupiedPlaces();
+                    System.out.println("Occupied Places: " + (occupied.isEmpty() ? "None" : ""));
+                    for (Garage g : occupied) {
+                        System.out.println(g);
+                    }
+                    break;
+
+                default:
+                    System.out.println("Invalid option.");
+            }
+        }
+        scanner.close();
+    }
+}
