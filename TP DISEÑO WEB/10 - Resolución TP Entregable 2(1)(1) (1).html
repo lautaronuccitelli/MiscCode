@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>TP Entregable</title>
+    <link rel='stylesheet' href='https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css'>
+    <script src='https://code.jquery.com/jquery-1.12.4.js'></script>
+    <script src='https://code.jquery.com/ui/1.12.1/jquery-ui.js'></script>
+    <script>
+        const url = 'https://681c31086ae7c794cf70edef.mockapi.io/api/Alumnos/Alumnos'
+
+        window.onload = function () {
+            $('#popUp').hide()
+            getObjects()
+        }
+
+        //PROMESAS//
+
+        function loadObjects() {
+            return new Promise(function (resolve, reject) {
+                var request = new XMLHttpRequest()
+                request.open('GET', url)
+                request.responseType = 'json'
+                request.onload = function () {
+                    if (request.status == 200) {
+                        resolve(request.response)
+                    } else {
+                        reject(Error(request.statusText))
+                    }
+                }
+                request.onerror = function () {
+                    reject(Error('Error: unexpected network error.'))
+                }
+                request.send()
+            })
+        }
+
+        function addObject() {
+            return new Promise(function (resolve, reject) {
+                var request = new XMLHttpRequest()
+                request.open('POST', url)
+                request.setRequestHeader('Content-Type', 'application/json')
+                var object = JSON.stringify({
+                    'nombre': document.getElementById('nombre').value,
+                    'apellido': document.getElementById('apellido').value,
+                    'edad': document.getElementById('edad').value,
+                    'curso': document.getElementById('curso').value
+                })
+                request.onload = function () {
+                    if (request.status == 200) {
+                        resolve(request.response)
+                    } else {
+                        reject(Error(request.statusText))
+                    }
+                }
+                request.onerror = function () {
+                    reject(Error('Error: unexpected network error.'))
+                }
+                request.send(object)
+            })
+        }
+
+        function removeObject(id) {
+            return new Promise(function (resolve, reject) {
+                var request = new XMLHttpRequest()
+                request.open('DELETE', url + `/${id}`)
+                request.onload = function () {
+                    if (request.status == 200) {
+                        resolve(request.response)
+                    } else {
+                        reject(Error(request.statusText))
+                    }
+                }
+                request.onerror = function () {
+                    reject(Error('Error: unexpected network error.'))
+                }
+                request.send()
+            })
+        }
+
+        function modifyObject() {
+            return new Promise(function (resolve, reject) {
+                var request = new XMLHttpRequest()
+                request.open('PUT', url + `/${document.getElementsByName('id2')[0].value}`)
+                request.setRequestHeader('Content-Type', 'application/json')
+                
+                var object = JSON.stringify({
+                    'nombre': document.getElementsByName('nombre2')[0].value,
+                    'apellido': document.getElementsByName('apellido2')[0].value,
+                    'edad': document.getElementsByName('edad2')[0].value,
+                    'curso': document.getElementsByName('curso2')[0].value
+                    
+                })
+                request.onload = function () {
+                    if (request.status == 200) {
+                        resolve(request.response)
+                    } else {
+                        reject(Error(request.statusText))
+                    }
+                }
+                request.onerror = function () {
+                    reject(Error('Error: unexpected network error.'))
+                }
+                request.send(object)
+            })
+        }
+
+        //FUNCIONES QUE CONSUMEN LAS PROMESAS//
+
+        function getObjects() {
+            loadObjects().then(response => {
+                var tbody = document.querySelector('tbody')
+                tbody.innerHTML = ''
+                response.forEach(object => {
+                     
+                   insertTr(object, true)
+                    
+                })
+            }).catch(reason => {
+                console.error(reason)
+            })
+        }
+
+        function saveObject() {
+            if (
+                document.getElementById('nombre').value.trim() !== '' &&
+                document.getElementById('apellido').value.trim() !== '' &&
+                document.getElementById('edad').value.trim() !== '' &&
+                document.getElementById('curso').value.trim() !== '') {
+                addObject().then((response) => {
+                    var object = JSON.parse(response)                 
+                    insertTr(object, true)
+                }).catch(reason => {
+                    console.error(reason)
+                })
+            }
+        }
+
+        function deleteObject(object) {
+            removeObject(object.id).then(() => {
+                var rows = document.querySelectorAll('tr')
+                rows.forEach(row => {
+                    if (row.getAttribute('id') === object.id) {
+                        row.remove()
+                        clearInputs()
+                    }
+                })
+            }).catch(reason => {
+                console.error(reason)
+            })
+        }
+
+        function updateObject() {
+            if (document.getElementsByName('nombre2')[0].value.trim() !== '' &&
+                document.getElementsByName('apellido2')[0].value.trim() !== '' &&
+                document.getElementsByName('edad2')[0].value.trim() !== '' &&                
+                document.getElementsByName('curso2')[0].value.trim() !== '') {
+                modifyObject().then(() => {
+                    var rows = document.querySelectorAll('tr')
+                    rows.forEach(row => {
+                        if (row.getAttribute('id') === document.getElementsByName('id2')[0].value) {
+                           
+                            var object = JSON.stringify({
+                                'id': document.getElementsByName('id2')[0].value,
+                                'nombre': document.getElementsByName('nombre2')[0].value,
+                                'apellido': document.getElementsByName('apellido2')[0].value,
+                                'edad': document.getElementsByName('edad2')[0].value,
+                                'curso': document.getElementsByName('curso2')[0].value
+                            })
+                            row.childNodes[1].innerHTML = document.getElementsByName('nombre2')[0].value
+                            row.childNodes[2].innerHTML = document.getElementsByName('apellido2')[0].value
+                            row.childNodes[3].innerHTML = document.getElementsByName('edad2')[0].value
+                            row.childNodes[4].innerHTML = document.getElementsByName('curso2')[0].value
+                            row.childNodes[5].innerHTML = `<button onclick='viewObject(${object})'>VIEW</button>`
+                            row.childNodes[6].innerHTML = `<button onclick='deleteObject(${object})'>DELETE</button>`
+                        }
+                    })
+                    $('#popUp').dialog('close')
+                    clearInputs()
+                }).catch(reason => {
+                    console.error(reason)
+                })
+            }
+        }
+
+        //FUNCIONES DE AGREGADO//
+
+        function insertTr(object, canChange) {
+            var tbody = document.querySelector('tbody')
+            var row = tbody.insertRow()
+            row.setAttribute('id', object.id)
+            var id = row.insertCell()
+            id.innerHTML = object.id
+            var name = row.insertCell()
+            name.innerHTML = object.nombre
+            var apellido = row.insertCell()
+            apellido.innerHTML = object.apellido
+            var edad = row.insertCell()
+            edad.innerHTML = object.edad
+            var curso = row.insertCell()
+            curso.innerHTML = object.curso
+            var object = JSON.stringify({
+                'id': object.id,
+                'nombre': object.nombre,
+                'apellido': object.apellido,
+                'edad': object.edad,
+                'curso': object.curso
+
+            })
+            if (canChange) {
+                var view = row.insertCell()
+                view.innerHTML = `<button onclick='viewObject(${object})'>VIEW</button>`
+                var del = row.insertCell()
+                del.innerHTML = `<button onclick='deleteObject(${object})'>DELETE</button>`
+            }
+            clearInputs()
+        }
+
+        function viewObject(object) {
+            
+            
+            document.getElementsByName('id2')[0].value = object.id
+            document.getElementsByName('nombre2')[0].value = object.nombre
+            document.getElementsByName('apellido2')[0].value = object.apellido
+            document.getElementsByName('edad2')[0].value = object.edad
+            document.getElementsByName('curso2')[0].value = object.curso
+            $('#popUp').dialog({
+                closeText: ''
+            }).css('font-size', '15px')
+        }
+
+        function clearInputs() {
+            document.getElementById('nombre').value = ''
+            document.getElementById('apellido').value = ''
+            document.getElementById('edad').value = ''
+            document.getElementById('curso').value = ''
+            document.getElementById('nombre').focus()
+        }
+    </script>
+</head>
+
+<body>
+    <table style='border: 1px solid'>
+        <thead>
+            <tr>
+                <th style='text-align: left'>ID</th>
+                <th style='text-align: left'>NOMBRE</th>
+                <th style='text-align: left'>APELLIDO</th>
+                <th style='text-align: left'>EDAD</th>
+                <th style='text-align: left'>CURSO</th>
+                <th colspan='2'></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td><input id='nombre' /></td>
+                <td><input id='apellido' /></td>
+                <td><input id='edad' /></td>
+                <td><input id="curso"></td>
+                <td colspan='2' style='text-align: center'><button onclick='saveObject()'>ADD</button></td>
+               
+                
+
+            </tr>
+        </tfoot>
+    </table>
+
+    <div id='popUp' style="overflow-x: hidden">
+        <table>
+            <tr>
+                <td><label for='id2' style='font-weight: bold'>ID</label></td>
+                <td><input name='id2' style='text-align: right' readonly /></td>
+            </tr>
+            <tr>
+                <td><label for='nombre2' style='font-weight: bold'>Nombre</label></td>
+                <td><input name='nombre2' style='text-align: right' /></td>
+            </tr>
+            <tr>
+                <td><label for='apellido2' style='font-weight: bold'>Apellido</label></td>
+                <td><input name='apellido2' style='text-align: right' /></td>
+            </tr>
+            <tr>
+                <td><label for='edad2' style='font-weight: bold'>Edad</label></td>
+                <td><input name='edad2' style='text-align: right' /></td>
+            </tr>
+            <tr>
+                <td><label for='curso2' style='font-weight: bold'>Curso</label></td>
+                <td><input name='curso2' style='text-align: right' /></td>
+            </tr>
+            <tr>
+                <td colspan='2' style='text-align: center'><button onclick='updateObject()'>UPDATE</button></td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>
