@@ -1,0 +1,213 @@
+// 🧩 Función auxiliar para generar tabla de frecuencia de variables categóricas
+function generarFrecuencia(data, campo, contenedorID) {
+  const conteo = {};
+
+  // 🔍 Se cuenta cuántas veces aparece cada categoría (frecuencia absoluta)
+  data.forEach((item) => {
+    const clave = item[campo];
+    if (clave) {
+      conteo[clave] = (conteo[clave] || 0) + 1;
+    }
+  });
+
+  // 🔢 Se calcula el total de observaciones para obtener proporciones luego
+  const total = Object.values(conteo).reduce((a, b) => a + b, 0);
+  let acumulada = 0;
+
+  const contenedor = document.getElementById(contenedorID);
+  if (!contenedor) {
+    console.warn(`Contenedor con id "${contenedorID}" no encontrado.`);
+    return;
+  }
+
+  // 📊 Se construye una tabla con:
+  // - Frecuencia absoluta
+  // - Frecuencia acumulada
+  // - Frecuencia relativa (porcentaje)
+  Object.entries(conteo)
+    .sort()
+    .forEach(([clave, valor]) => {
+      acumulada += valor;
+      const fila = document.createElement("tr");
+      fila.innerHTML = `
+      <td>${clave}</td>
+      <td>${valor}</td>
+      <td>${acumulada}</td>
+      <td>${((valor / total) * 100).toFixed(2)}%</td>
+    `;
+      contenedor.appendChild(fila);
+    });
+}
+
+// 📥 Se ejecuta automáticamente si estamos en FrequencyTable.html
+// Esto permite generar tablas de frecuencia al cargar la página
+if (document.body.id === "FrequencyTable") {
+  fetch("https://apidemo.geoeducacion.com.ar/api/testing/encuesta/1")
+    .then((response) => {
+      if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
+      return response.json();
+    })
+    .then((data) => {
+      const estudiantes = data.data;
+
+      // 📈 Se genera tabla de frecuencia para las variables categóricas: nivel y curso
+      generarFrecuencia(estudiantes, "nivel", "frecuencia-nivel");
+      generarFrecuencia(estudiantes, "curso", "frecuencia-curso");
+    })
+    .catch((error) => {
+      console.error("Error al cargar datos de frecuencia:", error);
+      alert("Hubo un error al cargar las tablas de frecuencia.");
+    });
+}
+
+// 🔁 Interacción de interfaz: abrir/cerrar menú
+document.addEventListener("DOMContentLoaded", function () {
+  const toggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("side-menu");
+
+  toggle.addEventListener("click", function () {
+    menu.classList.toggle("open");
+  });
+});
+
+// 📊 Función para calcular estadísticas descriptivas de una variable numérica (edad)
+async function obtenerEstadisticas() {
+  try {
+    const response = await fetch(
+      "https://apidemo.geoeducacion.com.ar/api/testing/encuesta/1"
+    );
+    if (!response.ok) {
+      throw new Error("Error al obtener los datos");
+    }
+    const data = await response.json();
+    const edades = data.data.map((est) => est.Edad).filter((e) => e != null);
+
+    if (edades.length === 0) {
+      throw new Error("No se encontraron edades válidas");
+    }
+
+    // 📈 Se calculan estadísticas de tendencia central, dispersión y posición
+    const estadisticas = calcularEstadisticas(edades);
+
+    // 📋 Se muestran en una tabla
+    mostrarEstadisticas(estadisticas);
+  } catch (error) {
+    console.error(error);
+    alert("Hubo un error al cargar los datos.");
+  }
+}
+
+// ⚙️ Calcula estadísticos básicos para una variable numérica (edad)
+function calcularEstadisticas(edades) {
+  const n = edades.length;
+
+  // 📌 Media: tendencia central
+  const media = edades.reduce((acc, edad) => acc + edad, 0) / n;
+
+  // 📌 Mediana: valor central ordenado
+  const sorted = [...edades].sort((a, b) => a - b);
+  const mediana =
+    n % 2 === 0
+      ? (sorted[n / 2 - 1] + sorted[n / 2]) / 2
+      : sorted[Math.floor(n / 2)];
+
+  // 📉 Valores extremos: mínimo y máximo
+  const min = Math.min(...edades);
+  const max = Math.max(...edades);
+
+  // 📊 Cuartiles: Q1 (25%) y Q3 (75%) indican posición
+  const q1 = calcularCuartil(sorted, 0.25);
+  const q3 = calcularCuartil(sorted, 0.75);
+
+  // 🔄 Desviación estándar: dispersión de los datos respecto a la media
+  const desviacionEstandar = Math.sqrt(
+    edades.reduce((acc, edad) => acc + Math.pow(edad - media, 2), 0) / n
+  );
+
+  return {
+    media,
+    mediana,
+    min,
+    max,
+    q1,
+    q3,
+    desviacionEstandar,
+  };
+}
+
+// 🔢 Función para interpolar cuartiles dentro de un conjunto ordenado
+function calcularCuartil(sorted, cuartil) {
+  const pos = (sorted.length - 1) * cuartil;
+  const base = Math.floor(pos);
+  const resto = pos - base;
+  return sorted[base] + resto * (sorted[base + 1] - sorted[base]);
+}
+
+// 📋 Mostrar las estadísticas calculadas en una tabla HTML
+function mostrarEstadisticas(estadisticas) {
+  const tbody = document.getElementById("estadisticas");
+  tbody.innerHTML = `
+          <tr><td>Media</td><td>${estadisticas.media.toFixed(2)}</td></tr>
+          <tr><td>Mediana</td><td>${estadisticas.mediana.toFixed(2)}</td></tr>
+          <tr><td>Valor Mínimo</td><td>${estadisticas.min}</td></tr>
+          <tr><td>Valor Máximo</td><td>${estadisticas.max}</td></tr>
+          <tr><td>Primer Cuartil (Q1)</td><td>${estadisticas.q1.toFixed(2)}</td></tr>
+          <tr><td>Segundo Cuartil (Q3)</td><td>${estadisticas.q3.toFixed(2)}</td></tr>
+          <tr><td>Desviación Estándar</td><td>${estadisticas.desviacionEstandar.toFixed(2)}</td></tr>
+        `;
+}
+
+// 📥 Carga las estadísticas automáticamente cuando la página se carga
+window.onload = obtenerEstadisticas;
+
+// 🔁 Interacción de interfaz (repetida)
+document.addEventListener("DOMContentLoaded", function () {
+  const toggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("side-menu");
+
+  toggle.addEventListener("click", function () {
+    menu.classList.toggle("open");
+  });
+});
+
+// 📜 Muestra los datos originales de cada estudiante (datos crudos)
+fetch("https://apidemo.geoeducacion.com.ar/api/testing/encuesta/1")
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(`Error HTTP: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then((data) => {
+    const estudiantes = data.data;
+    const tbody = document.getElementById("tabla-estudiantes");
+
+    // 🎯 Permite revisar individualmente cada registro de la muestra
+    estudiantes.forEach((estudiante) => {
+      const fila = document.createElement("tr");
+
+      fila.innerHTML = `
+            <td>${estudiante.nombre}</td>
+            <td>${estudiante.apellido}</td>
+            <td>${estudiante.Edad}</td>
+            <td>${estudiante.curso}</td>
+            <td>${estudiante.nivel}</td>
+          `;
+
+      tbody.appendChild(fila);
+    });
+  })
+  .catch((error) => {
+    console.error("Hubo un error en la consulta:", error);
+    alert("Error al consultar la API. Revisá la consola para más detalles.");
+  });
+
+// 🔁 Interacción del menú (repetida)
+document.addEventListener("DOMContentLoaded", function () {
+  const toggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("side-menu");
+
+  toggle.addEventListener("click", function () {
+    menu.classList.toggle("open");
+  });
+});
