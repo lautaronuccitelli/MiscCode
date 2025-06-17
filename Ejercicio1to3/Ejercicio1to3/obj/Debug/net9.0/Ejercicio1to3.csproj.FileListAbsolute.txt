@@ -1,0 +1,14 @@
+/mnt/disco/proyects/Ejercicio1to3/Ejercicio1to3/bin/Debug/net9.0/Ejercicio1to3
+/mnt/disco/proyects/Ejercicio1to3/Ejercicio1to3/bin/Debug/net9.0/Ejercicio1to3.deps.json
+/mnt/disco/proyects/Ejercicio1to3/Ejercicio1to3/bin/Debug/net9.0/Ejercicio1to3.runtimeconfig.json
+/mnt/disco/proyects/Ejercicio1to3/Ejercicio1to3/bin/Debug/net9.0/Ejercicio1to3.dll
+/mnt/disco/proyects/Ejercicio1to3/Ejercicio1to3/bin/Debug/net9.0/Ejercicio1to3.pdb
+/mnt/disco/proyects/Ejercicio1to3/Ejercicio1to3/obj/Debug/net9.0/Ejercicio1to3.GeneratedMSBuildEditorConfig.editorconfig
+/mnt/disco/proyects/Ejercicio1to3/Ejercicio1to3/obj/Debug/net9.0/Ejercicio1to3.AssemblyInfoInputs.cache
+/mnt/disco/proyects/Ejercicio1to3/Ejercicio1to3/obj/Debug/net9.0/Ejercicio1to3.AssemblyInfo.cs
+/mnt/disco/proyects/Ejercicio1to3/Ejercicio1to3/obj/Debug/net9.0/Ejercicio1to3.csproj.CoreCompileInputs.cache
+/mnt/disco/proyects/Ejercicio1to3/Ejercicio1to3/obj/Debug/net9.0/Ejercicio1to3.dll
+/mnt/disco/proyects/Ejercicio1to3/Ejercicio1to3/obj/Debug/net9.0/refint/Ejercicio1to3.dll
+/mnt/disco/proyects/Ejercicio1to3/Ejercicio1to3/obj/Debug/net9.0/Ejercicio1to3.pdb
+/mnt/disco/proyects/Ejercicio1to3/Ejercicio1to3/obj/Debug/net9.0/Ejercicio1to3.genruntimeconfig.cache
+/mnt/disco/proyects/Ejercicio1to3/Ejercicio1to3/obj/Debug/net9.0/ref/Ejercicio1to3.dll
