@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simulacro Parcial</title>
+    <link rel='stylesheet' href='https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css'>
+    <script src='https://code.jquery.com/jquery-1.12.4.js'></script>
+    <script src='https://code.jquery.com/ui/1.12.1/jquery-ui.js'></script>
+    <script>
+        const url = 'https://jsonplaceholder.typicode.com/users'
+
+        window.onload = function () {
+            $('#popUp').hide()
+            getObjects()
+        }
+
+        // === PROMESAS ===
+        function loadObjects() {
+            return new Promise(function (resolve, reject) {
+                fetch(url)
+                    .then(res => res.json())
+                    .then(data => resolve(data))
+                    .catch(err => reject(err))
+            })
+        }
+
+        function addObject(obj) {
+            return new Promise(function (resolve, reject) {
+                fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(obj)
+                }).then(res => res.json())
+                    .then(data => resolve(data))
+                    .catch(err => reject(err))
+            })
+        }
+
+        function removeObject(id) {
+            return new Promise(function (resolve, reject) {
+                fetch(url + '/' + id, { method: 'DELETE' })
+                    .then(res => {
+                        if (res.ok) resolve(id)
+                        else reject('Error eliminando objeto')
+                    })
+                    .catch(err => reject(err))
+            })
+        }
+
+        function modifyObject(obj) {
+            return new Promise(function (resolve, reject) {
+                fetch(url + '/' + obj.id, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(obj)
+                }).then(res => res.json())
+                    .then(data => resolve(data))
+                    .catch(err => reject(err))
+            })
+        }
+
+        // === FUNCIONES QUE CONSUMEN LAS PROMESAS ===
+        function getObjects() {
+            loadObjects().then(response => {
+                var tbody = document.querySelector('tbody')
+                tbody.innerHTML = ''
+                response.forEach(o => insertTr(o, true))
+            }).catch(reason => console.error(reason))
+        }
+
+        function saveObject() {
+            var obj = {
+                name: document.getElementById('nombre').value,
+                username: document.getElementById('apellido').value,
+                email: document.getElementById('edad').value,
+                phone: document.getElementById('curso').value
+            }
+            addObject(obj).then(data => {
+                insertTr(data, true)
+            }).catch(err => console.error(err))
+        }
+
+        function deleteObject(obj) {
+            removeObject(obj.id).then(id => {
+                document.getElementById(id).remove()
+            }).catch(err => console.error(err))
+        }
+
+        function updateObject() {
+            var obj = {
+                id: document.getElementsByName('id2')[0].value,
+                name: document.getElementsByName('nombre2')[0].value,
+                username: document.getElementsByName('apellido2')[0].value,
+                email: document.getElementsByName('edad2')[0].value,
+                phone: document.getElementsByName('curso2')[0].value
+            }
+            modifyObject(obj).then(data => {
+                document.getElementById(data.id).remove()
+                insertTr(data, true)
+                $('#popUp').dialog('close')
+            }).catch(err => console.error(err))
+        }
+
+        // === FUNCIONES DE AGREGADO ===
+        function insertTr(object, canChange) {
+            var tbody = document.querySelector('tbody')
+            var row = tbody.insertRow()
+            row.setAttribute('id', object.id)
+            var id = row.insertCell()
+            id.innerHTML = object.id
+            var name = row.insertCell()
+            name.innerHTML = object.name
+            var user = row.insertCell()
+            user.innerHTML = object.username
+            var email = row.insertCell()
+            email.innerHTML = object.email
+            var phone = row.insertCell()
+            phone.innerHTML = object.phone
+
+            var objStr = JSON.stringify({
+                'id': object.id,
+                'name': object.name,
+                'username': object.username,
+                'email': object.email,
+                'phone': object.phone
+            })
+
+            if (canChange) {
+                var view = row.insertCell()
+                view.innerHTML = `<button onclick='viewObject(${objStr})'>VIEW</button>`
+                var del = row.insertCell()
+                del.innerHTML = `<button onclick='deleteObject(${objStr})'>DELETE</button>`
+            }
+            clearInputs()
+        }
+
+        function viewObject(object) {
+            document.getElementsByName('id2')[0].value = object.id
+            document.getElementsByName('nombre2')[0].value = object.name
+            document.getElementsByName('apellido2')[0].value = object.username
+            document.getElementsByName('edad2')[0].value = object.email
+            document.getElementsByName('curso2')[0].value = object.phone
+            $('#popUp').dialog({
+                closeText: ''
+            }).css('font-size', '15px')
+        }
+
+        function clearInputs() {
+            document.getElementById('nombre').value = ''
+            document.getElementById('apellido').value = ''
+            document.getElementById('edad').value = ''
+            document.getElementById('curso').value = ''
+            document.getElementById('nombre').focus()
+        }
+    </script>
+</head>
+
+<body>
+    <table style='border: 1px solid'>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>USERNAME</th>
+                <th>EMAIL</th>
+                <th>PHONE</th>
+                <th colspan='2'></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td><input id='nombre' /></td>
+                <td><input id='apellido' /></td>
+                <td><input id='edad' /></td>
+                <td><input id='curso'></td>
+                <td colspan='2'><button onclick='saveObject()'>ADD</button></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div id='popUp' style="overflow-x: hidden">
+        <table>
+            <tr>
+                <td>ID</td>
+                <td><input name='id2' readonly /></td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td><input name='nombre2' /></td>
+            </tr>
+            <tr>
+                <td>Username</td>
+                <td><input name='apellido2' /></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><input name='edad2' /></td>
+            </tr>
+            <tr>
+                <td>Phone</td>
+                <td><input name='curso2' /></td>
+            </tr>
+            <tr>
+                <td colspan='2'><button onclick='updateObject()'>UPDATE</button></td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>
