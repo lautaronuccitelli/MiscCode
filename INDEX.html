@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>CRUD XHR - Muy muy simple</title>
+  <style>
+    body{font-family:Arial;padding:12px}
+    table{border-collapse:collapse;width:100%;max-width:900px}
+    th,td{border:1px solid #999;padding:6px 8px;text-align:left}
+    input{width:98%;box-sizing:border-box}
+    button{padding:4px 8px}
+  </style>
+</head>
+<body>
+  <h3>CRUD simple (XMLHttpRequest)</h3>
+
+  <table>
+    <thead>
+      <tr><th>ID</th><th>NAME</th><th>USERNAME</th><th>EMAIL</th><th>PHONE</th><th>VIEW</th><th>DEL</th></tr>
+    </thead>
+    <tbody id="tb"></tbody>
+    <tfoot>
+      <tr>
+        <td></td>
+        <td><input id="iName" placeholder="name"></td>
+        <td><input id="iUser" placeholder="username"></td>
+        <td><input id="iEmail" placeholder="email"></td>
+        <td><input id="iPhone" placeholder="phone"></td>
+        <td colspan="2"><button id="bAdd">ADD</button></td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <script>
+    const URL = 'https://jsonplaceholder.typicode.com/users';
+    const tb = document.getElementById('tb');
+    const dataById = {};
+
+    function getAll(cb){
+      const r = new XMLHttpRequest()
+      r.open ('GET', URL)
+      r.responseType = 'json'
+      r.onload = () => cb(r.response)
+      r.onerror = () => cb([])
+      r.send()
+    }
+
+    function create(obj,cb){
+      const r = new XMLHttpRequest()
+      r.open('POST', URL)
+      r.setRequestHeader('Content-Type', 'application/json') // ✅ CORREGIDO
+      r.responseType = 'json'
+      r.onload = () => cb(r.response)
+      r.onerror = () => cb(null)
+      r.send(JSON.stringify(obj))
+    }
+
+    function update(obj,cb){
+      const r = new XMLHttpRequest()
+      r.open('PUT', URL + '/' + obj.id)
+      r.setRequestHeader('Content-Type', 'application/json') // ✅ CORREGIDO
+      r.responseType = 'json'
+      r.onload = () => cb(r.response)
+      r.onerror = () => cb(null)
+      r.send(JSON.stringify(obj))
+    }
+
+    function remove(id,cb){
+      const r = new XMLHttpRequest()
+      r.open('DELETE', URL + '/' + id) // ✅ CORREGIDO: era obj.id
+      r.onload = () => cb(true)
+      r.onerror = () => cb(false)
+      r.send() // ✅ CORREGIDO: faltaban paréntesis
+    }
+
+    function rowHtml(u) {
+      // crea la fila (sin escape para que sea más simple)
+      return `<tr id="r-${u.id}">
+        <td>${u.id}</td>
+        <td>${u.name||''}</td>
+        <td>${u.username||''}</td>
+        <td>${u.email||''}</td>
+        <td>${u.phone||''}</td>
+        <td><button onclick="view(${u.id})">VIEW</button></td>
+        <td><button onclick="del(${u.id})">DEL</button></td>
+      </tr>`;
+    }
+
+    function addRow(u) {
+      dataById[u.id] = u
+      const existing = document.getElementById('r-' + u.id) // ✅ CORREGIDO
+      if(existing) existing.remove()
+      tb.insertAdjacentHTML('beforeend', rowHtml(u)) // ✅ CORREGIDO: era 'beforereend'
+    }
+
+    // ---------- acciones ----------
+    function load() {
+      getAll(list => {
+        tb.innerHTML = ''
+        list.forEach(u => {
+          addRow(u)
+        });
+      })
+    }
+
+    function add() {
+      const obj = {
+        name: document.getElementById('iName').value,
+        username: document.getElementById('iUser').value,
+        email: document.getElementById('iEmail').value,
+        phone: document.getElementById('iPhone').value
+      }
+      if(!obj.name) {alert('name required'); return}
+      create (obj , res =>{
+        if(res){
+          addRow(res)
+          document.getElementById('iName').value = '';
+          document.getElementById('iUser').value = '';
+          document.getElementById('iEmail').value = '';
+          document.getElementById('iPhone').value = '';
+        }else alert('creation error') // ✅ CORREGIDO: faltaba alert
+      })
+    }
+
+    // ver + editar con prompt (muy simple)
+    function view(id) {
+      const u = dataById[id]
+      if(!u) return
+      const n = prompt('name: ', u.name || ''); if (n === null) return
+      const us = prompt('username: ', u.username|| ''); if(us === null) return // ✅ CORREGIDO
+      const em = prompt('Email:', u.email||''); if (em===null) return
+      const ph = prompt('Phone:', u.phone||''); if (ph===null) return
+      const obj = { id: id, name: n, username: us, email: em, phone: ph } // ✅ CORREGIDO
+      update (obj, res => {
+        if(res) addRow(res)
+        else console.log('error')
+      })
+    }
+
+    function del(id) {
+      remove (id, ok => {
+        if(ok){
+          const r = document.getElementById('r-' + id)
+          if(r) r.remove()
+          delete dataById[id] // ✅ AÑADIDO: limpiar cache
+        }else console.log ('error')
+      })
+    }
+
+    // eventos
+    document.getElementById('bAdd').addEventListener('click', add);
+
+    // carga inicial
+    load();
+
+    // Exponer funciones al global para los onclick inline
+    window.view = view;
+    window.del = del;
+  </script>
+</body>
+</html>
