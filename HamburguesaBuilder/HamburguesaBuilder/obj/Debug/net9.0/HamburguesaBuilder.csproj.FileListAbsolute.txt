@@ -1,0 +1,14 @@
+/mnt/disco/proyects/HamburguesaBuilder/HamburguesaBuilder/bin/Debug/net9.0/HamburguesaBuilder
+/mnt/disco/proyects/HamburguesaBuilder/HamburguesaBuilder/bin/Debug/net9.0/HamburguesaBuilder.deps.json
+/mnt/disco/proyects/HamburguesaBuilder/HamburguesaBuilder/bin/Debug/net9.0/HamburguesaBuilder.runtimeconfig.json
+/mnt/disco/proyects/HamburguesaBuilder/HamburguesaBuilder/bin/Debug/net9.0/HamburguesaBuilder.dll
+/mnt/disco/proyects/HamburguesaBuilder/HamburguesaBuilder/bin/Debug/net9.0/HamburguesaBuilder.pdb
+/mnt/disco/proyects/HamburguesaBuilder/HamburguesaBuilder/obj/Debug/net9.0/HamburguesaBuilder.GeneratedMSBuildEditorConfig.editorconfig
+/mnt/disco/proyects/HamburguesaBuilder/HamburguesaBuilder/obj/Debug/net9.0/HamburguesaBuilder.AssemblyInfoInputs.cache
+/mnt/disco/proyects/HamburguesaBuilder/HamburguesaBuilder/obj/Debug/net9.0/HamburguesaBuilder.AssemblyInfo.cs
+/mnt/disco/proyects/HamburguesaBuilder/HamburguesaBuilder/obj/Debug/net9.0/HamburguesaBuilder.csproj.CoreCompileInputs.cache
+/mnt/disco/proyects/HamburguesaBuilder/HamburguesaBuilder/obj/Debug/net9.0/HamburguesaBuilder.dll
+/mnt/disco/proyects/HamburguesaBuilder/HamburguesaBuilder/obj/Debug/net9.0/refint/HamburguesaBuilder.dll
+/mnt/disco/proyects/HamburguesaBuilder/HamburguesaBuilder/obj/Debug/net9.0/HamburguesaBuilder.pdb
+/mnt/disco/proyects/HamburguesaBuilder/HamburguesaBuilder/obj/Debug/net9.0/HamburguesaBuilder.genruntimeconfig.cache
+/mnt/disco/proyects/HamburguesaBuilder/HamburguesaBuilder/obj/Debug/net9.0/ref/HamburguesaBuilder.dll
