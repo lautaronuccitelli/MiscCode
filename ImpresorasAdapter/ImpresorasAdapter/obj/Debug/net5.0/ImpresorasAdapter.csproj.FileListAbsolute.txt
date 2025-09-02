@@ -1,0 +1,16 @@
+C:\Users\idra10\source\repos\ImpresorasAdapter\ImpresorasAdapter\bin\Debug\net5.0\ImpresorasAdapter.exe
+C:\Users\idra10\source\repos\ImpresorasAdapter\ImpresorasAdapter\bin\Debug\net5.0\ImpresorasAdapter.deps.json
+C:\Users\idra10\source\repos\ImpresorasAdapter\ImpresorasAdapter\bin\Debug\net5.0\ImpresorasAdapter.runtimeconfig.json
+C:\Users\idra10\source\repos\ImpresorasAdapter\ImpresorasAdapter\bin\Debug\net5.0\ImpresorasAdapter.runtimeconfig.dev.json
+C:\Users\idra10\source\repos\ImpresorasAdapter\ImpresorasAdapter\bin\Debug\net5.0\ImpresorasAdapter.dll
+C:\Users\idra10\source\repos\ImpresorasAdapter\ImpresorasAdapter\bin\Debug\net5.0\ref\ImpresorasAdapter.dll
+C:\Users\idra10\source\repos\ImpresorasAdapter\ImpresorasAdapter\bin\Debug\net5.0\ImpresorasAdapter.pdb
+C:\Users\idra10\source\repos\ImpresorasAdapter\ImpresorasAdapter\obj\Debug\net5.0\ImpresorasAdapter.csproj.AssemblyReference.cache
+C:\Users\idra10\source\repos\ImpresorasAdapter\ImpresorasAdapter\obj\Debug\net5.0\ImpresorasAdapter.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\idra10\source\repos\ImpresorasAdapter\ImpresorasAdapter\obj\Debug\net5.0\ImpresorasAdapter.AssemblyInfoInputs.cache
+C:\Users\idra10\source\repos\ImpresorasAdapter\ImpresorasAdapter\obj\Debug\net5.0\ImpresorasAdapter.AssemblyInfo.cs
+C:\Users\idra10\source\repos\ImpresorasAdapter\ImpresorasAdapter\obj\Debug\net5.0\ImpresorasAdapter.csproj.CoreCompileInputs.cache
+C:\Users\idra10\source\repos\ImpresorasAdapter\ImpresorasAdapter\obj\Debug\net5.0\ImpresorasAdapter.dll
+C:\Users\idra10\source\repos\ImpresorasAdapter\ImpresorasAdapter\obj\Debug\net5.0\ref\ImpresorasAdapter.dll
+C:\Users\idra10\source\repos\ImpresorasAdapter\ImpresorasAdapter\obj\Debug\net5.0\ImpresorasAdapter.pdb
+C:\Users\idra10\source\repos\ImpresorasAdapter\ImpresorasAdapter\obj\Debug\net5.0\ImpresorasAdapter.genruntimeconfig.cache
