@@ -1,0 +1,14 @@
+/mnt/disco/proyects/LoggerSingleton/LoggerSingleton/bin/Debug/net9.0/LoggerSingleton
+/mnt/disco/proyects/LoggerSingleton/LoggerSingleton/bin/Debug/net9.0/LoggerSingleton.deps.json
+/mnt/disco/proyects/LoggerSingleton/LoggerSingleton/bin/Debug/net9.0/LoggerSingleton.runtimeconfig.json
+/mnt/disco/proyects/LoggerSingleton/LoggerSingleton/bin/Debug/net9.0/LoggerSingleton.dll
+/mnt/disco/proyects/LoggerSingleton/LoggerSingleton/bin/Debug/net9.0/LoggerSingleton.pdb
+/mnt/disco/proyects/LoggerSingleton/LoggerSingleton/obj/Debug/net9.0/LoggerSingleton.GeneratedMSBuildEditorConfig.editorconfig
+/mnt/disco/proyects/LoggerSingleton/LoggerSingleton/obj/Debug/net9.0/LoggerSingleton.AssemblyInfoInputs.cache
+/mnt/disco/proyects/LoggerSingleton/LoggerSingleton/obj/Debug/net9.0/LoggerSingleton.AssemblyInfo.cs
+/mnt/disco/proyects/LoggerSingleton/LoggerSingleton/obj/Debug/net9.0/LoggerSingleton.csproj.CoreCompileInputs.cache
+/mnt/disco/proyects/LoggerSingleton/LoggerSingleton/obj/Debug/net9.0/LoggerSingleton.dll
+/mnt/disco/proyects/LoggerSingleton/LoggerSingleton/obj/Debug/net9.0/refint/LoggerSingleton.dll
+/mnt/disco/proyects/LoggerSingleton/LoggerSingleton/obj/Debug/net9.0/LoggerSingleton.pdb
+/mnt/disco/proyects/LoggerSingleton/LoggerSingleton/obj/Debug/net9.0/LoggerSingleton.genruntimeconfig.cache
+/mnt/disco/proyects/LoggerSingleton/LoggerSingleton/obj/Debug/net9.0/ref/LoggerSingleton.dll
