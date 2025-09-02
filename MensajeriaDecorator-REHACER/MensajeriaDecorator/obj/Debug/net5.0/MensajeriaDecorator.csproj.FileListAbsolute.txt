@@ -1,0 +1,15 @@
+C:\Users\idra10\source\repos\MensajeriaDecorator\MensajeriaDecorator\bin\Debug\net5.0\MensajeriaDecorator.exe
+C:\Users\idra10\source\repos\MensajeriaDecorator\MensajeriaDecorator\bin\Debug\net5.0\MensajeriaDecorator.deps.json
+C:\Users\idra10\source\repos\MensajeriaDecorator\MensajeriaDecorator\bin\Debug\net5.0\MensajeriaDecorator.runtimeconfig.json
+C:\Users\idra10\source\repos\MensajeriaDecorator\MensajeriaDecorator\bin\Debug\net5.0\MensajeriaDecorator.runtimeconfig.dev.json
+C:\Users\idra10\source\repos\MensajeriaDecorator\MensajeriaDecorator\bin\Debug\net5.0\MensajeriaDecorator.dll
+C:\Users\idra10\source\repos\MensajeriaDecorator\MensajeriaDecorator\bin\Debug\net5.0\ref\MensajeriaDecorator.dll
+C:\Users\idra10\source\repos\MensajeriaDecorator\MensajeriaDecorator\bin\Debug\net5.0\MensajeriaDecorator.pdb
+C:\Users\idra10\source\repos\MensajeriaDecorator\MensajeriaDecorator\obj\Debug\net5.0\MensajeriaDecorator.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\idra10\source\repos\MensajeriaDecorator\MensajeriaDecorator\obj\Debug\net5.0\MensajeriaDecorator.AssemblyInfoInputs.cache
+C:\Users\idra10\source\repos\MensajeriaDecorator\MensajeriaDecorator\obj\Debug\net5.0\MensajeriaDecorator.AssemblyInfo.cs
+C:\Users\idra10\source\repos\MensajeriaDecorator\MensajeriaDecorator\obj\Debug\net5.0\MensajeriaDecorator.csproj.CoreCompileInputs.cache
+C:\Users\idra10\source\repos\MensajeriaDecorator\MensajeriaDecorator\obj\Debug\net5.0\MensajeriaDecorator.dll
+C:\Users\idra10\source\repos\MensajeriaDecorator\MensajeriaDecorator\obj\Debug\net5.0\ref\MensajeriaDecorator.dll
+C:\Users\idra10\source\repos\MensajeriaDecorator\MensajeriaDecorator\obj\Debug\net5.0\MensajeriaDecorator.pdb
+C:\Users\idra10\source\repos\MensajeriaDecorator\MensajeriaDecorator\obj\Debug\net5.0\MensajeriaDecorator.genruntimeconfig.cache
